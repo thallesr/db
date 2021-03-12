@@ -1,17 +1,14 @@
-package br.com.thallesr.thallesdatabase;
+package br.com.thallesr.thallesdatabase.structural;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @Import(DBConf.class)

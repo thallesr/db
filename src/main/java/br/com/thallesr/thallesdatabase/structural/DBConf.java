@@ -1,4 +1,4 @@
-package br.com.thallesr.thallesdatabase;
+package br.com.thallesr.thallesdatabase.structural;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
