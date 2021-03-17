@@ -25,7 +25,7 @@ public class PageContentsManager {
 
     }
 
-    private void shutdown() {
+    public void shutdown() {
         mm.shutdown();
     }
 

@@ -21,17 +21,17 @@ import java.nio.channels.FileChannel;
 */
 public class FileManager {
 
-    public static int PAGE_SIZE = 500;
+    public static int PAGE_SIZE = 512;
 
     private RandomAccessFile file;
     private FileChannel channel;
 
 
 
-    public FileManager(){
+    public FileManager(String filename){
         try {
         //    file = new RandomAccessFile("testfile.bin", "rws");
-            file = new RandomAccessFile("testfile.bin", "rw");
+            file = new RandomAccessFile(filename, "rw");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -49,7 +49,6 @@ public class FileManager {
         }
     public Page read(int id) throws IOException {
         Page p = new Page(new byte[PAGE_SIZE],id,this);
-
         channel.read(ByteBuffer.wrap(p.getContents()),PAGE_SIZE * id);
         return p;
     }

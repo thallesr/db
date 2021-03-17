@@ -14,12 +14,12 @@ import java.util.Objects;
 public class MemoryManager {
     private static int numberOfPages = 3;
     private static Page memory[] = new Page[numberOfPages];
-    private final FileManager pw = new FileManager();
+    private final FileManager pw = new FileManager("testfile.bin");
 
 
     public static void main(String[] args) throws NoMemoryForPage, PageNotFoundInMemory, PageAlreadyPinned {
         MemoryManager pm = new MemoryManager();
-        FileManager pw = new FileManager();
+        FileManager pw = new FileManager("testfile.bin");
         Page page = new Page("test page 1".getBytes(StandardCharsets.UTF_16), 1, pw);
         Page page2 = new Page("test page 2".getBytes(StandardCharsets.UTF_16), 2, pw);
         Page page3 = new Page("test page 3".getBytes(StandardCharsets.UTF_16), 3, pw);

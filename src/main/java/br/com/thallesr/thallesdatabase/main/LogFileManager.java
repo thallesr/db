@@ -9,18 +9,21 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Arrays;
 
 public class LogFileManager {
 
     //we will have to limit the size of a entry, if changes exceed this size it will be splitted in two or more
     private RandomAccessFile file;
     private FileChannel channel;
-    private LogPage currentLog;
+    private LogPage currentLog ;
     private int currentPos = 0;
 
     public LogFileManager() throws IOException {
         try {
             file = new RandomAccessFile("logfile.log", "rw");
+            //should read last page if there is one
+            currentLog = new LogPage();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -38,11 +41,13 @@ public class LogFileManager {
         buff.putLong(entry.pageId);
         buff.putInt(entry.start);
         buff.putInt(entry.end);
-        buff.put(entry.valueBefore);
+        //get view
+        buff.put(Arrays.copyOfRange(entry.valueBefore,entry.start,entry.end));
         write(buff);
     }
 
     private void write(ByteBuffer buff) throws IOException {
+
         if (currentPos + LogEntry.FULL_ENTRY_SIZE <= LogPage.LOG_PAGE_SIZE) {
             currentPos += LogEntry.FULL_ENTRY_SIZE;
             //future position after writing this
@@ -52,7 +57,10 @@ public class LogFileManager {
             currentPos = LogEntry.FULL_ENTRY_SIZE;
             //future position after writing this
         }
-        currentLog.buffer.put(buff);
+        //?
+        //buff.flip();
+        //doubtful
+        currentLog.buffer.put(buff.array());
         currentLog.buffer.position(currentPos);
     }
 
@@ -61,6 +69,8 @@ public class LogFileManager {
     }
 
     public void flush() throws IOException {
+        currentLog.buffer.position(0);
+        channel.write(currentLog.buffer);
         channel.force(false);
     }
 }

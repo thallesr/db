@@ -29,6 +29,11 @@ public class TransactionManager {
         //create logic when tx contains more than one entry;
         lrm.flush(tx.id);
         pcm.write(p, startPos, text);
+        pcm.shutdown();
     }
 
+    public static void main(String[] args) throws IOException, PageAlreadyPinned, OffLimitsException, NoMemoryForPage {
+        TransactionManager tm = new TransactionManager();
+        tm.writeText(1,5,"TX");
+    }
 }

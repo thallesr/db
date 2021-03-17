@@ -13,8 +13,8 @@ public class LogManager {
 
     }
 
-    public void log(int txId,int pageId,Operation write, byte[] contentBefore, int pos, int length, byte[] bytes) throws IOException {
-        LogEntry le = new LogEntry(txId,pageId,pos,pos+length,bytes);
+    public void log(int txId,int pageId,Operation write, byte[] contentBefore, int pos, int length, byte[] newContent) throws IOException {
+        LogEntry le = new LogEntry(txId,pageId,pos,pos+length*2,contentBefore);
         logFileManager.write(le);
     }
 
